@@ -1,0 +1,26 @@
+npm uninstall -g create-react-app
+npm install -g create-react-app
+npx create-react-app my-app --typescript
+
+npm install --save redux
+npm install --save react-redux
+npm install --save redux-thunk
+npm install --save react-router
+npm install --save react-router-dom
+npm install --save redux-devtools-extension
+npm install --save lodash
+
+npm install --save-dev node-sass
+npm install --save-dev typescript
+npm install --save-dev tslint
+npm install --save-dev @types/lodash
+npm install --save-dev @types/node
+npm install --save-dev @types/react
+npm install --save-dev @types/react-dom
+npm install --save-dev @types/jest
+npm install --save-dev @types/node-fetch
+npm install --save-dev @types/redux
+npm install --save-dev @types/react-redux
+npm install --save-dev @types/redux-thunk
+npm install --save-dev @types/react-router
+npm install --save-dev @types/react-router-dom

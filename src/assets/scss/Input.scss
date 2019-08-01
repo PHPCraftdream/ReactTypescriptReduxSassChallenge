@@ -1,0 +1,51 @@
+.app {
+  .input {
+    min-width: $input-min-w;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    font-size: $font-size1;
+
+    &:focus {
+      outline: none;
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 100, 0.5);
+    }
+  }
+
+  .button {
+    border: 1px solid transparent;
+    height: 38px;
+    border-radius: 4px;
+    color: $button-font-color;
+    background-color: $button-bg;
+    font-size: $font-size0;
+    min-width: $input-min-w;
+
+    &:hover, &:focus {
+      border: 1px solid $main-bg-color4;
+    }
+
+    &:disabled {
+      background-color: $button-bg-disabled;
+    }
+
+    &:active {
+      background-color: $button-bg-hover;
+    }
+  }
+
+  .button-arrow-down {
+    cursor: pointer;
+    outline: none;
+    background-color: $round-button-bg;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    &:hover {
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import '../../assets/scss/Config';
+
+.auth-page {
+  height: 100%;
+  display: flex;
+
+  .auth-page-side {
+    color: $main-bg-color3-font;
+    flex-basis: 560px;
+    position: relative;
+    background-size: 75px;
+    background: $main-bg-color3 url(../../assets/img/logo-rotated.svg) repeat;
+  }
+
+  .auth-page-side-logo-top {
+    position: absolute;
+    top: 0;
+    height: 100px;
+    width: 100%;
+    background: url(../../assets/img/logo-title.svg) no-repeat scroll 30px 50%;
+  }
+
+  .auth-page-side-logo-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -85px;
+    margin-left: -100px;
+    height: 170px;
+    width: 200px;
+    background: url(../../assets/img/logo.svg) no-repeat scroll 0 0;
+  }
+
+  .auth-page-side-phone-bottom {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    background: url(../../assets/img/icon-phone.svg) no-repeat scroll 30px 30px;
+    padding: 35px 70px;
+    font-weight: bold;
+    font-family: $font-family1;
+  }
+
+  .auth-page-ui {
+    background: $main-bg-color2;
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .auth-page-panel {
+    @extend %box-shadow;
+    background-color: $main-bg-color1;
+    flex-basis: 560px;
+    display: table;
+  }
+
+  .auth-page-panel-line {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth-page-side {
+    display: none;
+  }
+}
