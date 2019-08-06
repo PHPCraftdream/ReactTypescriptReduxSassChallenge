@@ -16,7 +16,7 @@ export interface IRootState {
     photographers: IPhotographerState;
 }
 
-export const rootReducer = combineReducers<IRootState, TAllActions>({
+export const rootReducer = combineReducers({
     auth: authReducer,
     photographers: photographersReducer,
 });

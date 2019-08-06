@@ -22,7 +22,9 @@ export interface IHTMLInputElementType
     extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
 }
 
-export interface IHTMLInputElementProps extends Omit<IHTMLInputElementType, "onChange" | "value"> {
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+
+export interface IHTMLInputElementProps extends Omit<IHTMLInputElementType, "onChange" | "value" | "name"> {
     addClassName?: string;
     className?: string;
     initialValue?: string;

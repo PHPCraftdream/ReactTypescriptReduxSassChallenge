@@ -6,7 +6,7 @@ import {AuthActions, IAuthActions} from "../../Auth/Actions";
 import {AuthService} from "../../Auth/AuthService";
 import {IAuthState} from "../../Auth/Models";
 import {AuthPage} from "../../Auth/Pages/AuthPage";
-import {IRootState} from "../Redux";
+import {IRootState, TAllActions} from "../Redux";
 import {Routes} from "../Routes";
 import {TRender} from "../Types";
 
@@ -42,7 +42,7 @@ const mapStateToProps = (state: IRootState, ownProps: IOwnProps): IStateProps =>
     };
 };
 
-const mapDispatchToProps = (dipatch: Dispatch, ownProps: IOwnProps): IDispatchProps => {
+const mapDispatchToProps = (dipatch: Dispatch<TAllActions>, ownProps: IOwnProps): IDispatchProps => {
     return {
         authActions: new AuthActions(dipatch, new AuthService()),
     };
