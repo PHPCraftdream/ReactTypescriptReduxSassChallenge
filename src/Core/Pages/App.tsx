@@ -1,53 +1,37 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {Dispatch} from "redux";
 
-import {AuthActions, IAuthActions} from "../../Auth/Actions";
-import {AuthService} from "../../Auth/AuthService";
-import {IAuthState} from "../../Auth/Models";
-import {AuthPage} from "../../Auth/Pages/AuthPage";
-import {IRootState, TAllActions} from "../Redux";
+import "../../assets/scss/App.scss";
+import {FruitLink} from "../../FruitState/FruitLink";
+import {IFruitStoreDict, TFruitComponentProps, TFruitLinkStoresBuilder} from "../../FruitState/types";
+import {getAuthStore, IAuthStore} from "../../Modules/Auth/AuthStore";
+import {AuthPage} from "../../Modules/Auth/Pages/AuthPage";
+import {getPhotographersStore, IPhotographersStore} from "../../Modules/Photographers/PhotographersStore";
 import {Routes} from "../Routes";
 import {TRender} from "../Types";
 
-import "../../assets/scss/App.scss";
-
 interface IOwnProps {}
 
-interface IStateProps {
-    authState: IAuthState;
+interface IStoresProps extends IFruitStoreDict {
+    authStore: IAuthStore;
+    photographersStore: IPhotographersStore;
 }
 
-interface IDispatchProps {
-    authActions: IAuthActions;
-}
-
-type TProps = IOwnProps & IStateProps & IDispatchProps;
-
-export class AppComponent extends React.Component<TProps, {}> {
+export class AppComponent extends React.Component<TFruitComponentProps<IOwnProps, IStoresProps>> {
     public render(): TRender {
-        const {authState, authActions} = this.props;
+        const {authStore} = this.props.stores;
+        const authData = authStore && authStore.getData();
 
-        if (authState && authState.data && authState.data.isAuth) {
+        if (authData && authData.data && authData.data.isAuth) {
             return <Routes/>;
         }
 
-        return <AuthPage authActions={authActions} authState={authState} />;
+        return <AuthPage authStore={authStore} />;
     }
 }
 
-const mapStateToProps = (state: IRootState, ownProps: IOwnProps): IStateProps => {
-    return {
-        authState : state.auth,
-    };
-};
+const linkObject: TFruitLinkStoresBuilder<IStoresProps> = () => ({
+    authStore: getAuthStore(),
+    photographersStore: getPhotographersStore(),
+});
 
-const mapDispatchToProps = (dipatch: Dispatch<TAllActions>, ownProps: IOwnProps): IDispatchProps => {
-    return {
-        authActions: new AuthActions(dipatch, new AuthService()),
-    };
-};
-
-export const App = connect(
-    mapStateToProps, mapDispatchToProps
-)(AppComponent);
+export const App = FruitLink<IOwnProps, IStoresProps>(AppComponent, linkObject);

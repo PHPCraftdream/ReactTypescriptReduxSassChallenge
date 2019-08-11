@@ -1,4 +1,4 @@
-import {IAsyncData} from "../Core/Types";
+import {EAsyncStatus, IAsyncData} from "../../Core/Types";
 
 export enum EAuthStatus {
     SUCCESS = 'SUCCESS',

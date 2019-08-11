@@ -15,7 +15,8 @@
     "max-line-length": [true, 250],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "member-ordering": false
+    "member-ordering": false,
+    "ban-types": [true, ["Object", "Use {} instead."], ["String"]]
   },
   "rulesDirectory": []
 }

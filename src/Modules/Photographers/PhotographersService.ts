@@ -1,5 +1,6 @@
-import {AppConfig} from "../Core/AppConfig";
-import {Requests} from "../Core/Requests";
+import {AppConfig} from "../../Core/AppConfig";
+import {Requests} from "../../Core/Requests";
+import {fruitMem} from "../../FruitState/tools";
 import {getListMockData, getMockDetailsData} from "./Mocks";
 import {IPhotographerDetails, IPhotographerListItem} from "./Models";
 
@@ -8,7 +9,7 @@ export interface IPhotographerService {
     loadDetails: (guid: string) => Promise<IPhotographerDetails>;
 }
 
-export class PhotographerService implements IPhotographerService {
+export class PhotographersService implements IPhotographerService {
     public isMocksEnabled = (): boolean => {
         return AppConfig.isMocksEnabled();
     };
@@ -51,3 +52,7 @@ export class PhotographerService implements IPhotographerService {
         });
     };
 }
+
+export const getPhotographersService = fruitMem<IPhotographerService>(
+    () => new PhotographersService()
+);

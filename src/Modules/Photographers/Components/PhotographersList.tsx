@@ -1,19 +1,18 @@
 import {isEmpty, memoize} from "lodash";
 import * as React from "react";
 
-import {EAsyncStatus, IAsyncData, TRender} from "../../Core/Types";
-import {IPhotographersActions} from "../Actions";
-import {IPhotographerDetails, IPhotographerListItem, IPhotographerState} from "../Models";
+import {EAsyncStatus, IAsyncData, TRender} from "../../../Core/Types";
+import {IPhotographerDetails, IPhotographerListItem} from "../Models";
+import {IPhotographersStore} from "../PhotographersStore";
 
 interface IProps {
-    photographersState: IPhotographerState;
-    photographersActions: IPhotographersActions;
+    photographersStore: IPhotographersStore;
 }
 
 export class PhotographersList extends React.Component<IProps> {
     public loadList = () => {
-        const {photographersActions} = this.props;
-        photographersActions.loadList();
+        const {photographersStore} = this.props;
+        photographersStore.loadList();
     };
 
     public componentDidMount(): void {
@@ -21,20 +20,21 @@ export class PhotographersList extends React.Component<IProps> {
     }
 
     public toggleDetails = (guid: string) => {
-        const {photographersActions, photographersState} = this.props;
+        const {photographersStore} = this.props;
+        const photographersState = photographersStore.getData();
 
         const currentDetailsData = photographersState && photographersState.currentDetailsData;
         const details = currentDetailsData && currentDetailsData.data;
         const detailsGuid = details && details.guid;
 
         if (!detailsGuid) {
-            photographersActions.loadDetails(guid);
+            photographersStore.loadDetails(guid);
             return;
         }
 
-        photographersActions.closeDetails();
+        photographersStore.closeDetails();
         if (detailsGuid !== guid) {
-            photographersActions.loadDetails(guid);
+            photographersStore.loadDetails(guid);
         }
     };
 
@@ -46,7 +46,7 @@ export class PhotographersList extends React.Component<IProps> {
         const name = `${item.name.first} ${item.name.last}`;
 
         return (
-            <div className="photographers-list-item"  key={item.guid}>
+            <div className="photographers-list-item" key={item.guid}>
                 <div className="avatar-container">
                     <img src={item.picture} alt={name} className="avatar"/>
                 </div>
@@ -79,7 +79,7 @@ export class PhotographersList extends React.Component<IProps> {
 
         if (details && details.status === EAsyncStatus.PROCESSING) {
             return (
-                <div className="photographers-details-item" key={item.guid}>
+                <div className="photographers-details-item" key={`details-${item.guid}`}>
                     {avaContainer}
                     <div className="info-specialization">Loading ...</div>
                     <div/>
@@ -89,17 +89,17 @@ export class PhotographersList extends React.Component<IProps> {
 
         if (details && details.status === EAsyncStatus.SUCCESS) {
             return (
-                <div className="photographers-details-item" key={item.guid}>
+                <div className="photographers-details-item" key={`details-${item.guid}`}>
                     {avaContainer}
                     <div className="info-specialization">
                         <div className="specialization-title">Specialization</div>
                         {specialization && specialization.map(spec => (
-                            <div key={spec} className="specialization-item">{spec}</div>
+                            <div key={`details-${item.guid}-${spec}`} className="specialization-item">{spec}</div>
                         ))}
                     </div>
                     <div className="info-pictures">
-                        {pictures && pictures.map(pic => (
-                            <div key={pic.url} className="info-picture">
+                        {pictures && pictures.map((pic, ind) => (
+                            <div key={`details-${item.guid}-${pic.url}-${ind}`} className="info-picture">
                                 <img src={pic.url} alt={pic.url}/>
                             </div>
                         ))}
@@ -115,7 +115,8 @@ export class PhotographersList extends React.Component<IProps> {
     };
 
     public renderList(): TRender {
-        const {photographersState} = this.props;
+        const {photographersStore} = this.props;
+        const photographersState = photographersStore.getData();
         const data = photographersState && !isEmpty(photographersState.data) && photographersState.data;
 
         const currentDetailsData = photographersState && photographersState.currentDetailsData;
@@ -142,7 +143,8 @@ export class PhotographersList extends React.Component<IProps> {
     }
 
     public render(): TRender {
-        const {photographersState} = this.props;
+        const {photographersStore} = this.props;
+        const photographersState = photographersStore.getData();
 
         if (photographersState.status === EAsyncStatus.PROCESSING) {
             return (

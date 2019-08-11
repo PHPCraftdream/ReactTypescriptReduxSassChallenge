@@ -24,7 +24,7 @@ export interface IHTMLInputElementType
 
 type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 
-export interface IHTMLInputElementProps extends Omit<IHTMLInputElementType, "onChange" | "value" | "name"> {
+export interface IHTMLInputElementProps extends Omit<IHTMLInputElementType, "onChange" | "value"> {
     addClassName?: string;
     className?: string;
     initialValue?: string;

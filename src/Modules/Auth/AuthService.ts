@@ -1,5 +1,6 @@
-import {AppConfig} from "../Core/AppConfig";
-import {Requests} from "../Core/Requests";
+import {AppConfig} from "../../Core/AppConfig";
+import {Requests} from "../../Core/Requests";
+import {fruitMem} from "../../FruitState/tools";
 import {EAuthStatus, IAuthData} from "./Models";
 
 export const MOCK_TOKEN = "___MOCK_TOKEN___";
@@ -52,3 +53,7 @@ export class AuthService implements IAuthService {
         });
     };
 }
+
+export const getAuthService = fruitMem<IAuthService>(
+    () => new AuthService()
+);

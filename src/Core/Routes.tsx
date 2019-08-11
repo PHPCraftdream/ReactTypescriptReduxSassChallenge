@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import {PhotographersPage} from "../Photographers/Components/PhotographersPage";
+import {PhotographersPage} from "../Modules/Photographers/Pages/PhotographersPage";
 import {TRender} from "./Types";
 
 export class Routes extends React.Component {

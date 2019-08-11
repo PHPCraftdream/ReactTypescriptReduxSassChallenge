@@ -1,4 +1,4 @@
-import {IAsyncData, IDictionary} from "../Core/Types";
+import {IAsyncData, IDictionary} from "../../Core/Types";
 
 export interface IPhotographerListItem {
     _id: string;
@@ -25,6 +25,6 @@ export interface IPhotographerDetails {
     specialization?: string[];
 }
 
-export interface IPhotographerState extends IAsyncData<IPhotographerListItem[]> {
+export interface IPhotographersState extends IAsyncData<IPhotographerListItem[]> {
     currentDetailsData?: IAsyncData<IPhotographerDetails>;
 }

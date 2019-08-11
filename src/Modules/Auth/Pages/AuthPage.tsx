@@ -1,14 +1,13 @@
 import * as React from "react";
-import {Input} from "../../Core/Components/Input";
-import {EAsyncStatus, TRender} from "../../Core/Types";
-import {IAuthActions} from "../Actions";
-import {EAuthStatus, IAuthState} from "../Models";
+import {Input} from "../../../Core/Components/Input";
+import {EAsyncStatus, TRender} from "../../../Core/Types";
+import {IAuthStore} from "../AuthStore";
+import {EAuthStatus} from "../Models";
 
 import './AuthPage.scss';
 
 interface IProps {
-    authActions: IAuthActions;
-    authState: IAuthState;
+    authStore: IAuthStore;
 }
 
 export class AuthPage extends React.Component<IProps> {
@@ -24,17 +23,19 @@ export class AuthPage extends React.Component<IProps> {
     };
 
     public handleOnClickLogin = () => {
-        this.props.authActions.auth(this.login, this.password);
+        const {authStore} = this.props;
+        authStore.auth(this.login, this.password);
     };
 
     public renderAuthPanel(): TRender {
-        const {authState} = this.props;
+        const {authStore} = this.props;
+        const authData = authStore.getData();
 
-        if (!authState) {
+        if (!authData) {
             return null;
         }
 
-        const isProcessing = authState.status === EAsyncStatus.PROCESSING;
+        const isProcessing = authData.status === EAsyncStatus.PROCESSING;
 
         return (
             <div className="auth-page-panel">
@@ -51,7 +52,7 @@ export class AuthPage extends React.Component<IProps> {
                            onChange={this.handleOnChangePassword}/>
                 </div>
 
-                {authState.data && authState.data.status === EAuthStatus.WRONG_AUTH_DATA && (
+                {authData.data && authData.data.status === EAuthStatus.WRONG_AUTH_DATA && (
                     <div className="auth-page-panel-line">
                         Wrong auth data
                     </div>
@@ -67,7 +68,7 @@ export class AuthPage extends React.Component<IProps> {
                     </button>
                 </div>
 
-                {authState.status === EAsyncStatus.ERROR && (
+                {authData.status === EAsyncStatus.ERROR && (
                     <div className="auth-page-panel-line">
                         Connection error
                     </div>
@@ -77,9 +78,10 @@ export class AuthPage extends React.Component<IProps> {
     }
 
     public render(): TRender {
-        const {authState} = this.props;
+        const {authStore} = this.props;
+        const authData = authStore.getData();
 
-        if (!authState) {
+        if (!authData) {
             return null;
         }
 
