@@ -9,7 +9,7 @@ export class RequestsClass {
         return new Promise<RESPONSE>((resolve, reject) => {
             fetch(url, {body, method: "POST"})
                 .then((res: Response) => {
-                    const response = res.json<>() as RESPONSE;
+                    const response = res.json();
                     resolve(response);
                 })
                 .catch((e: Error) => reject(e));
